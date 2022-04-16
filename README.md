@@ -1,4 +1,4 @@
-# Simple Todo-App
+# Simple Todo-App Frontend
 
 This project was created using React.js
 
