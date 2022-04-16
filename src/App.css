@@ -46,6 +46,16 @@ h1 {
   color: #000;
 }
 
+.todo-input-update {
+  padding: 14px 32px 14px 16px;
+  border-radius: 4px 0 0 4px;
+  border: 2px solid #008000;
+  outline: none;
+  width: 320px;
+  background: transparent;
+  color: #000;
+}
+
 .todo-input::placeholder {
   color: #6c757d;
 }
@@ -58,6 +68,17 @@ h1 {
   outline: none;
   background: #ffbf00;
   color: #000;
+  text-transform: capitalize;
+}
+
+.todo-button-update {
+  padding: 16px;
+  border: none;
+  border-radius: 0 4px 4px 0;
+  cursor: pointer;
+  outline: none;
+  background: #008000;
+  color: #fff;
   text-transform: capitalize;
 }
 
@@ -87,6 +108,18 @@ h1 {
   margin: 4px auto;
   color: #fff;
   background: #008000;
+  padding: 16px;
+  border-radius: 5px;
+  width: 90%;
+}
+
+.todo-row-wip {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 4px auto;
+  color: #000;
+  background: #ffbf00;
   padding: 16px;
   border-radius: 5px;
   width: 90%;

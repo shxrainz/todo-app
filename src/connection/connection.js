@@ -1,6 +1,6 @@
 import axios from "axios"
 
-const serverBaseUrl = "http://localhost:5000/api/todo/"
+const serverBaseUrl = "http://localhost:5000/api/todo"
 
 //HTTP ERROR
 function respondCodeAxios(statusCode) {
@@ -20,7 +20,6 @@ export function getTodos() {
         .get(
             serverBaseUrl + "/todoList",
             {
-
                 headers: {
                     Accept: "application/json",
                     "Content-Type": "application/json",
@@ -33,18 +32,19 @@ export function getTodos() {
             return responseJson.data;
         })
         .catch(error => {
-            if (error?.response.status === 401 || error?.response.status === 403 || error?.response.status === 404) {
-                respondCodeAxios(error?.response.status)
-            }
+            console.log("error",error)
+            // if (error?.response.status === 401 || error?.response.status === 403 || error?.response.status === 404) {
+            //     respondCodeAxios(error?.response.status)
+            // }
         });
 }
 
 //POST
-export function addTodo() {
+export function addTodo(body) {
 
         return axios
             .post(
-                serverBaseUrl + "/addTodo", "",
+                serverBaseUrl + "/addTodo", body,
                 {
                     headers: {
                         Accept: "application/json",
@@ -53,12 +53,14 @@ export function addTodo() {
                 },
             )
             .then(responseJson => {
+                console.log("addTodo responseJson.data",responseJson.data)
                 return responseJson.data;
             })
             .catch(error => {
-                if (error?.response.status == 401 || error?.response.status == 403) {
-                    respondCodeAxios(error?.response.status)
-                }
+                console.log("error addTodo",error)
+                // if (error?.response.status === 401 || error?.response.status === 403) {
+                //     respondCodeAxios(error?.response.status)
+                // }
             });
     
 
@@ -130,7 +132,7 @@ export function deleteTodoItem(id) {
             return responseJson
         })
         .catch(error => {
-            if (error?.response.status == 401 || error?.response.status == 403) {
+            if (error?.response.status === 401 || error?.response.status === 403) {
                 respondCodeAxios(error?.response.status)
             }
         })

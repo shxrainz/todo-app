@@ -17,17 +17,13 @@ function TodoForm(props) {
     if (input == null || input === '') {
       alert("Please enter a todo item")
       return
-    } else {
-
-    }
+    } 
 
     props.onSubmit({
       id: Math.floor(Math.random() * 10000),
       text: input
     });
     setInput('');
-
-
 
   }
 
@@ -37,37 +33,37 @@ function TodoForm(props) {
 
   return (
     <form className='todo-form' onSubmit={handleSubmit}>
-    {props.edit ? (
-      <>
-      <input
-        type='text'
-        placeholder='Update an item'
-        value={input}
-        name='text'
-        className='todo-input edit'
-        onChange={handleChange}
-        ref={inputRef}
-      />
-      <button className='todo-button edit'>Update</button>
-      </>
+      {props.edit ? (
+        <>
+          <input
+            type='text'
+            placeholder='Update an item'
+            value={input}
+            name='text'
+            className='todo-input edit'
+            onChange={handleChange}
+            ref={inputRef}
+          />
+          <button className='todo-button edit'>Update</button>
+        </>
 
-    ) : (
-      <>
-      <input
-        type='text'
-        placeholder='Create a todo item'
-        value={input}
-        name='text'
-        className='todo-input'
-        onChange={handleChange}
-        ref={inputRef}
-      />
-      <button className='todo-button'>Add Todo</button>
-      </>
-    )}
+      ) : (
+        <>
+          <input
+            type='text'
+            placeholder='Create a todo item'
+            value={input}
+            name='text'
+            className='todo-input'
+            onChange={handleChange}
+            ref={inputRef}
+          />
+          <button className='todo-button'>Add Todo</button>
+        </>
+      )}
     </form>
   )
-  
+
 }
 
 export default TodoForm

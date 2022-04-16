@@ -40,12 +40,12 @@ function TodoList() {
         <div>
             <h1>Simple Todo App</h1>
             <TodoForm onSubmit={addTodo} />
-            <Todo
+            {/* <Todo
                 todos={todos}
                 completeTodo={completeTodo}
                 removeTodo={removeTodo}
                 updateTodo={updateTodo}
-            />
+            /> */}
         </div>
     )
 }
