@@ -1,6 +1,7 @@
 import axios from "axios"
 
-const serverBaseUrl = "http://localhost:5000/api/todo"
+//const serverBaseUrl = "http://localhost:5000/api/todo"
+const serverBaseUrl = "https://msyahreen-todo-app-backend.herokuapp.com/api/todo"
 
 //GET
 export function getTodos() {
