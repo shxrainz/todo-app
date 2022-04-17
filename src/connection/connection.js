@@ -92,11 +92,11 @@ export function updateTodoItem(id, body) {
 }
 
 //PUT
-export function updateTodoItemCompleted(id, body) {
+export function updateTodoItemCompleted(id) {
 
     return axios
         .put(
-            serverBaseUrl + "/item/" + id, body,
+            serverBaseUrl + "/item/completed/" + id,
             {
                 headers: {
                     Accept: "application/json",
@@ -110,9 +110,10 @@ export function updateTodoItemCompleted(id, body) {
             return responseJson.data;
         })
         .catch(error => {
-            if (error.response.status === 401 || error.response.status === 403) {
-                respondCodeAxios(error.response.status)
-            }
+            console.log("error updateTodoItemCompleted",error)
+            // if (error?.response.status === 401 || error?.response.status === 403) {
+            //     respondCodeAxios(error?.response.status)
+            // }
         });
 }
 

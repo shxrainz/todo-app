@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { addTodo, getTodos, deleteTodoItem, updateTodoItem } from '../../connection/connection';
-import { RiCloseCircleLine } from 'react-icons/ri'
+import { addTodo, getTodos, deleteTodoItem, updateTodoItem, updateTodoItemCompleted } from '../../connection/connection';
+import { RiCloseCircleLine, RiCheckboxLine } from 'react-icons/ri'
 import { TiEdit } from 'react-icons/ti'
 
 const TodoForm = () => {
@@ -11,6 +11,7 @@ const TodoForm = () => {
     const inputRef = useRef(null)
     const [inputUpdate, setInputUpdate] = useState('')
     const [editID, setEditID] = useState('')
+    const [isLoading, setLoading] = useState(false)
 
     useEffect(() => {
         inputRef.current.focus()
@@ -35,10 +36,12 @@ const TodoForm = () => {
 
         console.log("deleteTodoItem id", id)
         if (id !== null || id !== '') {
+            setLoading(true)
             await deleteTodoItem(id).then(res => {
                 console.log("deleteTodoItem", res)
                 alert(res.data.msg)
                 getCurrentTodo()
+                setLoading(false)
             })
 
         }
@@ -57,12 +60,29 @@ const TodoForm = () => {
 
     }
 
+    //Complete Todo Item
+    const completeTodo = async (id) => {
+
+        console.log("completeTodoItem id", id)
+        if (id !== null || id !== '') {
+            setLoading(true)
+            await updateTodoItemCompleted(id).then(res => {
+                console.log("completeTodoItem", res)
+                alert(res.msg)
+                getCurrentTodo()
+                setLoading(false)
+            })
+
+        }
+
+    }
+
     const handleSubmit = async (e) => {
 
         e.preventDefault();
 
         //Validation
-        console.log("updateVisible",updateVisible)
+        console.log("updateVisible", updateVisible)
         if (updateVisible) {
 
             if (inputUpdate == null || inputUpdate === '') {
@@ -71,6 +91,7 @@ const TodoForm = () => {
             } else {
                 //UpdateTodo
                 if (editID !== null || editID !== '') {
+                    setLoading(true)
                     let body = {
                         "todo": inputUpdate,
                         "status": 1
@@ -81,6 +102,7 @@ const TodoForm = () => {
                         alert(res.msg)
                         setUpdateVisible(false)
                         getCurrentTodo()
+                        setLoading(false)
                     })
                 }
             }
@@ -93,6 +115,7 @@ const TodoForm = () => {
                 return
             } else {
                 //AddTodo
+                setLoading(true)
                 let body = {
                     "todo": input,
                     "status": 1
@@ -101,6 +124,7 @@ const TodoForm = () => {
                 await addTodo(body).then(res => {
                     alert(res.msg)
                     getCurrentTodo()
+                    setLoading(false)
                 })
 
 
@@ -135,23 +159,34 @@ const TodoForm = () => {
                         <button className='todo-button'>Add Todo</button>
                     </form>
                     <>
-                        {todos !== '' && todos.map((todo, index) => (
-                            <div className={todo.status === 0 ? 'todo-row complete' : 'todo-row'} key={index}>
-                                <div>
-                                    {todo.todo}
-                                </div>
-                                {todo.status !== 0 ?
-                                    <div className='icons'>
-                                        <RiCloseCircleLine onClick={() => deleteTodo(todo.id)} className='delete-icon' />
-                                        <TiEdit onClick={() => updateTodo(todo.id, todo.todo)} className='edit-icon' />
-                                    </div>
-                                    :
+                        {todos !== '' && !isLoading ?
+                            todos.map((todo, index) => (
+                                <div className={todo.status === 0 ? 'todo-row complete' : 'todo-row'} key={index}>
                                     <div>
-                                        <h3>Completed</h3>
+                                        {todo.todo}
                                     </div>
-                                }
-                            </div>
-                        ))}
+                                    {todo.status !== 0 ?
+                                        <div className='icons'>
+                                            <RiCloseCircleLine onClick={() => deleteTodo(todo.id)} className='delete-icon' />
+                                            <TiEdit onClick={() => updateTodo(todo.id, todo.todo)} className='edit-icon' />
+                                            <RiCheckboxLine onClick={() => completeTodo(todo.id)} className='check-icon' />
+                                        </div>
+                                        :
+                                        <div>
+                                            <h3>Completed</h3>
+                                        </div>
+                                    }
+                                </div>
+                            ))
+                            :
+                            <>
+                                <div className='todo-loading'>
+                                    <div className='dot-pulse'>
+                                    </div>
+                                </div>
+                                <h5>Loading</h5>
+                            </>
+                        }
                     </>
                 </>
                 :
@@ -167,6 +202,19 @@ const TodoForm = () => {
                         />
                         <button className='todo-button-update'>Update Todo</button>
                     </form>
+                    {!isLoading ?
+                        <div>
+                            <button onClick={() => { setUpdateVisible(false) }}>Go Back</button>
+                        </div>
+                        :
+                        <>
+                            <div className='todo-loading'>
+                                <div className='dot-pulse'>
+                                </div>
+                            </div>
+                            <h5>Loading</h5>
+                        </>
+                    }
                 </>
             }
         </div>
