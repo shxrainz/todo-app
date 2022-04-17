@@ -34,11 +34,10 @@ const TodoForm = () => {
     //Delete Todo
     const deleteTodo = async (id) => {
 
-        console.log("deleteTodoItem id", id)
         if (id !== null || id !== '') {
             setLoading(true)
             await deleteTodoItem(id).then(res => {
-                console.log("deleteTodoItem", res)
+                //console.log("deleteTodoItem", res)
                 alert(res.data.msg)
                 getCurrentTodo()
                 setLoading(false)
@@ -63,11 +62,10 @@ const TodoForm = () => {
     //Complete Todo Item
     const completeTodo = async (id) => {
 
-        console.log("completeTodoItem id", id)
         if (id !== null || id !== '') {
             setLoading(true)
             await updateTodoItemCompleted(id).then(res => {
-                console.log("completeTodoItem", res)
+                //console.log("completeTodoItem", res)
                 alert(res.msg)
                 getCurrentTodo()
                 setLoading(false)
@@ -82,7 +80,6 @@ const TodoForm = () => {
         e.preventDefault();
 
         //Validation
-        console.log("updateVisible", updateVisible)
         if (updateVisible) {
 
             if (inputUpdate == null || inputUpdate === '') {
@@ -97,7 +94,7 @@ const TodoForm = () => {
                         "status": 1
                     }
                     await updateTodoItem(editID, body).then(res => {
-                        console.log("updateTodoItem", res)
+                        //console.log("updateTodoItem", res)
                         setEditID('')
                         alert(res.msg)
                         setUpdateVisible(false)
@@ -120,7 +117,6 @@ const TodoForm = () => {
                     "todo": input,
                     "status": 1
                 }
-                console.log("Body", body)
                 await addTodo(body).then(res => {
                     alert(res.msg)
                     getCurrentTodo()

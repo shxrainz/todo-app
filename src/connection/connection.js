@@ -2,17 +2,6 @@ import axios from "axios"
 
 const serverBaseUrl = "http://localhost:5000/api/todo"
 
-//HTTP ERROR
-function respondCodeAxios(statusCode) {
-    try {
-        if (statusCode === 401 || statusCode === 403 || statusCode === 404) {
-            window.location.href = "/"
-        }
-    } catch (error) {
-        window.location.href = "/"
-    }
-}
-
 //GET
 export function getTodos() {
 
@@ -28,14 +17,10 @@ export function getTodos() {
             5000, "timeout"
         )
         .then(responseJson => {
-            console.log(responseJson.data)
             return responseJson.data;
         })
         .catch(error => {
             console.log("error",error)
-            // if (error?.response.status === 401 || error?.response.status === 403 || error?.response.status === 404) {
-            //     respondCodeAxios(error?.response.status)
-            // }
         });
 }
 
@@ -53,14 +38,10 @@ export function addTodo(body) {
                 },
             )
             .then(responseJson => {
-                console.log("addTodo responseJson.data",responseJson.data)
                 return responseJson.data;
             })
             .catch(error => {
                 console.log("error addTodo",error)
-                // if (error?.response.status === 401 || error?.response.status === 403) {
-                //     respondCodeAxios(error?.response.status)
-                // }
             });
     
 
@@ -85,9 +66,7 @@ export function updateTodoItem(id, body) {
             return responseJson.data;
         })
         .catch(error => {
-            if (error.response.status === 401 || error.response.status === 403) {
-                respondCodeAxios(error.response.status)
-            }
+            console.log("error updateTodoItem",error)
         });
 }
 
@@ -111,9 +90,6 @@ export function updateTodoItemCompleted(id) {
         })
         .catch(error => {
             console.log("error updateTodoItemCompleted",error)
-            // if (error?.response.status === 401 || error?.response.status === 403) {
-            //     respondCodeAxios(error?.response.status)
-            // }
         });
 }
 
@@ -133,8 +109,6 @@ export function deleteTodoItem(id) {
             return responseJson
         })
         .catch(error => {
-            if (error?.response.status === 401 || error?.response.status === 403) {
-                respondCodeAxios(error?.response.status)
-            }
+            console.log("error deleteTodoItem",error)
         })
 }
